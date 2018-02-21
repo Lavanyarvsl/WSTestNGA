@@ -1,0 +1,18 @@
+<project name="PROJECT" basedir=".">        
+    <path id="cp">
+            <pathelement path="bin" />
+            <fileset dir="jar"/>
+    </path>
+    <target name="compile">
+            <javac classpathref="cp" srcdir="src" destdir="bin"/>
+    </target>
+    <target name="run" depends="compile">
+            <java classpathref="cp" classname="org.testng.TestNG" args="testng.xml"/>                    
+    </target>
+     <target name="report" depends="run">           
+           <xslt in="./test-output/testng-results.xml" style="./testng-results.xsl" out="./testng-xslt/index.html">
+                 <param expression="${basedir}/testng-xslt/" name="testNgXslt.outputDir" />
+                 <classpath refid="cp"/>
+            </xslt>
+    </target>    
+</project>
